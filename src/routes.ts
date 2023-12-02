@@ -8,7 +8,6 @@ router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: false }));
 
 import controller from "./controller/controllers";
-import { Script } from "vm";
 
 router.get("/", (req: Request, res: Response) => {
   res.send("Olá, servidor!");

@@ -1,6 +1,7 @@
 "use strict";
 const mysql = require("mysql");
-const db = mysql.createConnection({
+const db = mysql.createPool({
+    connectionLimit: 10,
     host: "localhost",
     user: "root",
     database: "c_sharp_teste_db",
