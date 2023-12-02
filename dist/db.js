@@ -15,4 +15,5 @@ db.getConnection((error, connection) => {
     console.log("Conexão bem-sucedida.");
     connection.release();
 });
+//
 module.exports = db;

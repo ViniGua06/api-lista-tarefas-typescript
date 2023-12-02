@@ -18,5 +18,5 @@ db.getConnection((error: any, connection: any) => {
 
   connection.release();
 });
-
+//
 module.exports = db;
