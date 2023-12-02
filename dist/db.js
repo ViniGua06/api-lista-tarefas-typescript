@@ -2,10 +2,10 @@
 const mysql = require("mysql");
 const db = mysql.createPool({
     connectionLimit: 10,
-    host: "localhost",
-    user: "root",
-    database: "c_sharp_teste_db",
-    password: "Mel060616",
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    database: process.env.DB_DATABASE,
+    password: process.env.DB_PASSWORD,
 });
 db.getConnection((error, connection) => {
     if (error) {
