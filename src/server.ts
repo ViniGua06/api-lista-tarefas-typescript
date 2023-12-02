@@ -3,12 +3,7 @@ const app = express();
 
 import routes from "./routes";
 
-app.use(routes);
-
 const cors = require("cors");
-const bodyParser = require("body-parser");
-
-const PORT = process.env.PORT || 2000;
 
 app.use(
   cors({
@@ -18,6 +13,12 @@ app.use(
     optionsSuccessStatus: 204,
   })
 );
+
+app.use(routes);
+
+const bodyParser = require("body-parser");
+
+const PORT = process.env.PORT || 2000;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
