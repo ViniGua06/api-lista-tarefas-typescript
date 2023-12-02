@@ -8,13 +8,15 @@ const db = mysql.createPool({
   password: "Mel060616",
 });
 
-db.connect((error: string) => {
+db.getConnection((error: any, connection: any) => {
   if (error) {
-    console.log(error);
+    console.error("Erro ao conectar ao banco de dados:", error);
     return;
   }
 
-  console.log(`Servidor mysql rodando!`);
+  console.log("Conexão bem-sucedida.");
+
+  connection.release();
 });
 
 module.exports = db;

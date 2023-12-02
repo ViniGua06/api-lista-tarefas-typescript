@@ -1,7 +1,5 @@
 const db = require("../db");
 
-import mysql from "mysql";
-
 interface ICheck {
   script: string;
   campos: any[] | any;

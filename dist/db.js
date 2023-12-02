@@ -7,11 +7,12 @@ const db = mysql.createPool({
     database: "c_sharp_teste_db",
     password: "Mel060616",
 });
-db.connect((error) => {
+db.getConnection((error, connection) => {
     if (error) {
-        console.log(error);
+        console.error("Erro ao conectar ao banco de dados:", error);
         return;
     }
-    console.log(`Servidor mysql rodando!`);
+    console.log("Conexão bem-sucedida.");
+    connection.release();
 });
 module.exports = db;
