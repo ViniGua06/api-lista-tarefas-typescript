@@ -25,111 +25,123 @@ let idF: number,
 ////////////
 
 router.post("/cadastrar", async (req, res) => {
-  const { nome, email, senha, idade } = req.body;
-  const check = "select count(*) as total from usuario where email = ?";
+  try {
+    const { nome, email, senha, idade } = req.body;
+    const check = "select count(*) as total from usuario where email = ?";
 
-  const feedback = await controller.check({ script: check, campos: [email] });
+    const feedback = await controller.check({ script: check, campos: [email] });
 
-  if (feedback == 0) {
-    const script =
-      "insert into usuario (nome, email, senha, idade) values (?, ?, ?, ?)";
+    if (feedback == 0) {
+      const script =
+        "insert into usuario (nome, email, senha, idade) values (?, ?, ?, ?)";
 
-    const insert = await controller.insert({
-      script: script,
-      campos: [nome, email, senha, idade],
-    });
+      const insert = await controller.insert({
+        script: script,
+        campos: [nome, email, senha, idade],
+      });
 
-    const data =
-      "select id, nome, email, senha, idade from usuario where email = ? and senha = ?";
-    const getData = await controller.getdata({
-      script: data,
-      campos: [email, senha],
-    });
+      const data =
+        "select id, nome, email, senha, idade from usuario where email = ? and senha = ?";
+      const getData = await controller.getdata({
+        script: data,
+        campos: [email, senha],
+      });
 
-    idF = getData[0].id;
-    nomeF = getData[0].nome;
-    emailF = getData[0].email;
-    senhaF = getData[0].senha;
-    idadeF = getData[0].idade;
+      idF = getData[0].id;
+      nomeF = getData[0].nome;
+      emailF = getData[0].email;
+      senhaF = getData[0].senha;
+      idadeF = getData[0].idade;
 
-    logado = true;
+      logado = true;
 
-    const dataF = {
-      id: idF,
-      nome: nomeF,
-      email: emailF,
-      senha: senhaF,
-      idade: idadeF,
-      logado: logado,
-    };
+      const dataF = {
+        id: idF,
+        nome: nomeF,
+        email: emailF,
+        senha: senhaF,
+        idade: idadeF,
+        logado: logado,
+      };
 
-    if (insert == 1) {
-      res.status(200).json(dataF);
+      if (insert == 1) {
+        res.status(200).json(dataF);
+      } else {
+        res.status(400).json({ message: "algum erro ocorreu!" });
+      }
     } else {
-      res.status(400).json({ message: "algum erro ocorreu!" });
+      res.status(500).json({ message: "email ja cadastrado!" });
     }
-  } else {
-    res.status(500).json({ message: "email ja cadastrado!" });
+  } catch (error) {
+    console.log("erro aí!!!!!");
   }
 });
 
 router.post("/logar", async (req, res) => {
-  const { email, senha } = req.body;
+  try {
+    const { email, senha } = req.body;
 
-  const script =
-    "select count(*) as total from usuario where email = ? and senha = ?";
+    const script =
+      "select count(*) as total from usuario where email = ? and senha = ?";
 
-  const feedback = await controller.check({
-    script: script,
-    campos: [email, senha],
-  });
-
-  if (feedback == 1) {
-    const data =
-      "select id, nome, email, senha, idade from usuario where email = ? and senha = ?";
-    const getData = await controller.getdata({
-      script: data,
+    const feedback = await controller.check({
+      script: script,
       campos: [email, senha],
     });
 
-    idF = getData[0].id;
-    nomeF = getData[0].nome;
-    emailF = getData[0].email;
-    senhaF = getData[0].senha;
-    idadeF = getData[0].idade;
+    if (feedback == 1) {
+      const data =
+        "select id, nome, email, senha, idade from usuario where email = ? and senha = ?";
+      const getData = await controller.getdata({
+        script: data,
+        campos: [email, senha],
+      });
 
-    logado = true;
+      idF = getData[0].id;
+      nomeF = getData[0].nome;
+      emailF = getData[0].email;
+      senhaF = getData[0].senha;
+      idadeF = getData[0].idade;
 
-    const dataF = {
-      id: idF,
-      nome: nomeF,
-      email: emailF,
-      senha: senhaF,
-      idade: idadeF,
-      logado: logado,
-    };
+      logado = true;
 
-    res.status(200).json(dataF);
-  } else {
-    res.status(400).json({ message: "Email ou senha inválidos!" });
+      const dataF = {
+        id: idF,
+        nome: nomeF,
+        email: emailF,
+        senha: senhaF,
+        idade: idadeF,
+        logado: logado,
+      };
+
+      res.status(200).json(dataF);
+    } else {
+      res.status(400).json({ message: "Email ou senha inválidos!" });
+    }
+  } catch (error) {
+    console.log("erro2");
   }
 });
 
 router.post("/addTask", async (req, res) => {
-  const { titulo, descricao, prioridade, usuario_id, imagem_capa } = req.body;
+  try {
+    const { titulo, descricao, prioridade, usuario_id, imagem_capa } = req.body;
 
-  const script =
-    "insert into tarefa (titulo, descricao, prioridade, usuario_id, imagem_capa, concluida) values (?, ?, ?, ?, ?, 0)";
+    const script =
+      "insert into tarefa (titulo, descricao, prioridade, usuario_id, imagem_capa, concluida) values (?, ?, ?, ?, ?, 0)";
 
-  const insert = await controller.insert({
-    script: script,
-    campos: [titulo, descricao, prioridade, usuario_id, imagem_capa],
-  });
+    const insert = await controller.insert({
+      script: script,
+      campos: [titulo, descricao, prioridade, usuario_id, imagem_capa],
+    });
 
-  if (insert == 1) {
-    res.status(200).json({ message: "tarefa adicionada com sucesso!" });
-  } else {
-    res.status(400).json({ message: "houve algum erro!" });
+    if (insert == 1) {
+      res.status(200).json({ message: "tarefa adicionada com sucesso!" });
+    } else {
+      res.status(400).json({ message: "houve algum erro!" });
+    }
+  } catch (error) {
+    console.log("Erro3");
   }
 });
 

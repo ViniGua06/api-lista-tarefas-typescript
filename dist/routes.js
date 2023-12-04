@@ -27,90 +27,105 @@ router.get("/", (req, res) => {
 let idF, nomeF, emailF, senhaF, idadeF, logado = false;
 ////////////
 router.post("/cadastrar", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { nome, email, senha, idade } = req.body;
-    const check = "select count(*) as total from usuario where email = ?";
-    const feedback = yield controllers_1.default.check({ script: check, campos: [email] });
-    if (feedback == 0) {
-        const script = "insert into usuario (nome, email, senha, idade) values (?, ?, ?, ?)";
-        const insert = yield controllers_1.default.insert({
-            script: script,
-            campos: [nome, email, senha, idade],
-        });
-        const data = "select id, nome, email, senha, idade from usuario where email = ? and senha = ?";
-        const getData = yield controllers_1.default.getdata({
-            script: data,
-            campos: [email, senha],
-        });
-        idF = getData[0].id;
-        nomeF = getData[0].nome;
-        emailF = getData[0].email;
-        senhaF = getData[0].senha;
-        idadeF = getData[0].idade;
-        logado = true;
-        const dataF = {
-            id: idF,
-            nome: nomeF,
-            email: emailF,
-            senha: senhaF,
-            idade: idadeF,
-            logado: logado,
-        };
-        if (insert == 1) {
-            res.status(200).json(dataF);
+    try {
+        const { nome, email, senha, idade } = req.body;
+        const check = "select count(*) as total from usuario where email = ?";
+        const feedback = yield controllers_1.default.check({ script: check, campos: [email] });
+        if (feedback == 0) {
+            const script = "insert into usuario (nome, email, senha, idade) values (?, ?, ?, ?)";
+            const insert = yield controllers_1.default.insert({
+                script: script,
+                campos: [nome, email, senha, idade],
+            });
+            const data = "select id, nome, email, senha, idade from usuario where email = ? and senha = ?";
+            const getData = yield controllers_1.default.getdata({
+                script: data,
+                campos: [email, senha],
+            });
+            idF = getData[0].id;
+            nomeF = getData[0].nome;
+            emailF = getData[0].email;
+            senhaF = getData[0].senha;
+            idadeF = getData[0].idade;
+            logado = true;
+            const dataF = {
+                id: idF,
+                nome: nomeF,
+                email: emailF,
+                senha: senhaF,
+                idade: idadeF,
+                logado: logado,
+            };
+            if (insert == 1) {
+                res.status(200).json(dataF);
+            }
+            else {
+                res.status(400).json({ message: "algum erro ocorreu!" });
+            }
         }
         else {
-            res.status(400).json({ message: "algum erro ocorreu!" });
+            res.status(500).json({ message: "email ja cadastrado!" });
         }
     }
-    else {
-        res.status(500).json({ message: "email ja cadastrado!" });
+    catch (error) {
+        console.log("erro aí!!!!!");
     }
 }));
 router.post("/logar", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { email, senha } = req.body;
-    const script = "select count(*) as total from usuario where email = ? and senha = ?";
-    const feedback = yield controllers_1.default.check({
-        script: script,
-        campos: [email, senha],
-    });
-    if (feedback == 1) {
-        const data = "select id, nome, email, senha, idade from usuario where email = ? and senha = ?";
-        const getData = yield controllers_1.default.getdata({
-            script: data,
+    try {
+        const { email, senha } = req.body;
+        const script = "select count(*) as total from usuario where email = ? and senha = ?";
+        const feedback = yield controllers_1.default.check({
+            script: script,
             campos: [email, senha],
         });
-        idF = getData[0].id;
-        nomeF = getData[0].nome;
-        emailF = getData[0].email;
-        senhaF = getData[0].senha;
-        idadeF = getData[0].idade;
-        logado = true;
-        const dataF = {
-            id: idF,
-            nome: nomeF,
-            email: emailF,
-            senha: senhaF,
-            idade: idadeF,
-            logado: logado,
-        };
-        res.status(200).json(dataF);
+        if (feedback == 1) {
+            const data = "select id, nome, email, senha, idade from usuario where email = ? and senha = ?";
+            const getData = yield controllers_1.default.getdata({
+                script: data,
+                campos: [email, senha],
+            });
+            idF = getData[0].id;
+            nomeF = getData[0].nome;
+            emailF = getData[0].email;
+            senhaF = getData[0].senha;
+            idadeF = getData[0].idade;
+            logado = true;
+            const dataF = {
+                id: idF,
+                nome: nomeF,
+                email: emailF,
+                senha: senhaF,
+                idade: idadeF,
+                logado: logado,
+            };
+            res.status(200).json(dataF);
+        }
+        else {
+            res.status(400).json({ message: "Email ou senha inválidos!" });
+        }
     }
-    else {
-        res.status(400).json({ message: "Email ou senha inválidos!" });
+    catch (error) {
+        console.log("erro2");
     }
 }));
 router.post("/addTask", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { titulo, descricao, prioridade, usuario_id, imagem_capa } = req.body;
-    const script = "insert into tarefa (titulo, descricao, prioridade, usuario_id, imagem_capa, concluida) values (?, ?, ?, ?, ?, 0)";
-    const insert = yield controllers_1.default.insert({
-        script: script,
-        campos: [titulo, descricao, prioridade, usuario_id, imagem_capa],
-    });
-    if (insert == 1) {
-        res.status(200).json({ message: "tarefa adicionada com sucesso!" });
+    try {
+        const { titulo, descricao, prioridade, usuario_id, imagem_capa } = req.body;
+        const script = "insert into tarefa (titulo, descricao, prioridade, usuario_id, imagem_capa, concluida) values (?, ?, ?, ?, ?, 0)";
+        const insert = yield controllers_1.default.insert({
+            script: script,
+            campos: [titulo, descricao, prioridade, usuario_id, imagem_capa],
+        });
+        if (insert == 1) {
+            res.status(200).json({ message: "tarefa adicionada com sucesso!" });
+        }
+        else {
+            res.status(400).json({ message: "houve algum erro!" });
+        }
     }
-    else {
-        res.status(400).json({ message: "houve algum erro!" });
+    catch (error) {
+        console.log("Erro3");
     }
 }));
 router.get("/getData", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
