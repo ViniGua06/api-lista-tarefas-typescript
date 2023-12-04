@@ -1,7 +1,6 @@
 "use strict";
 const mysql = require("mysql");
-const db = mysql.createConnection(process.env.DATABASE_URL ||
-    'mysql://0vfqord8ecqcisd2wgid:pscale_pw_HIj6J2Er3WvhA5SKkhxuDTJi0qpbMBMlSciW6aDTe6P@aws.connect.psdb.cloud/db_2?ssl={"rejectUnauthorized":true}');
+const db = mysql.createConnection(process.env.DATABASE_URL);
 db.connect((error) => {
     if (error) {
         console.log(error);
