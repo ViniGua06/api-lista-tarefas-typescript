@@ -1,5 +1,5 @@
 "use strict";
-const mysql = require("mysql2");
+const mysql = require("mysql");
 const db = mysql.createConnection(process.env.DATABASE_URL ||
     'mysql://nwqeoav2uvwn01t36g1a:pscale_pw_ht9apa46MNsH4S7j3UPpGa2EbbqJQyhoClXKN6sT21X@aws.connect.psdb.cloud/db_2?ssl={"rejectUnauthorized":true}');
 db.connect((error) => {
