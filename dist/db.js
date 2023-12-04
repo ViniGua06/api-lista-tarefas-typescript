@@ -28,5 +28,12 @@ db.query(tables, (error) => {
 const script2 = `GRANT ALL PRIVILEGES ON *.* TO 'nwqeoav2uvwn01t36g1a'@'%' IDENTIFIED BY 'Mel060616' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 `;
+db.query(script2, (error) => {
+    if (error) {
+        console.log(error);
+        return;
+    }
+    console.log("privas");
+});
 //
 module.exports = db;

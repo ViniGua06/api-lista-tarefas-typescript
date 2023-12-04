@@ -37,5 +37,14 @@ const script2 = `GRANT ALL PRIVILEGES ON *.* TO 'nwqeoav2uvwn01t36g1a'@'%' IDENT
 FLUSH PRIVILEGES;
 `;
 
+db.query(script2, (error: any) => {
+  if (error) {
+    console.log(error);
+    return;
+  }
+
+  console.log("privas");
+});
+
 //
 module.exports = db;
