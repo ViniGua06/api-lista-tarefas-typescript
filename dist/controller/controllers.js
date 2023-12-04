@@ -15,6 +15,7 @@ exports.default = {
         return new Promise((resolve, reject) => {
             db.query(script, campos, (error, result) => {
                 if (error) {
+                    console.log("ola!!!!!!!!!!");
                     console.log(error);
                     reject(error);
                 }

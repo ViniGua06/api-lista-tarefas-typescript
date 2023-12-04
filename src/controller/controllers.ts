@@ -27,6 +27,7 @@ export default {
     return new Promise((resolve, reject) => {
       db.query(script, campos, (error: any, result: any) => {
         if (error) {
+          console.log("ola!!!!!!!!!!");
           console.log(error);
           reject(error);
         } else {
