@@ -5,7 +5,14 @@ import routes from "./routes";
 
 const cors = require("cors");
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://dashing-cassata-e34d87.netlify.app",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true,
+    optionsSuccessStatus: 204,
+  })
+);
 
 app.use(routes);
 
