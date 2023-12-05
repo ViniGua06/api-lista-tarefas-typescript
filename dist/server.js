@@ -8,7 +8,7 @@ const app = express();
 const routes_1 = __importDefault(require("./routes"));
 const cors = require("cors");
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: "https://dashing-cassata-e34d87.netlify.app",
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
     optionsSuccessStatus: 204,
