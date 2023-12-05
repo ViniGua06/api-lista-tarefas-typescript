@@ -155,6 +155,8 @@ router.get("/getData", async (req, res) => {
     logado: logado,
   };
 
+  console.log(data);
+
   res.status(200).json(data);
 });
 
@@ -212,6 +214,12 @@ router.get("/completeTask/:id", async (req, res) => {
 });
 
 router.get("/sair", async (req, res) => {
+  idF = 0;
+  nomeF = "";
+  emailF = "";
+  senhaF = "";
+  idadeF = 0;
+
   logado = false;
 
   res.status(200).json({ message: "deslogado!" });

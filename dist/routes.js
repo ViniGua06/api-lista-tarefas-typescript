@@ -137,6 +137,7 @@ router.get("/getData", (req, res) => __awaiter(void 0, void 0, void 0, function*
         idade: idadeF,
         logado: logado,
     };
+    console.log(data);
     res.status(200).json(data);
 }));
 router.get("/getTasks/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -178,6 +179,11 @@ router.get("/completeTask/:id", (req, res) => __awaiter(void 0, void 0, void 0, 
     }
 }));
 router.get("/sair", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    idF = 0;
+    nomeF = "";
+    emailF = "";
+    senhaF = "";
+    idadeF = 0;
     logado = false;
     res.status(200).json({ message: "deslogado!" });
 }));
