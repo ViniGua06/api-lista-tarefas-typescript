@@ -7,12 +7,7 @@ const express = require("express");
 const app = express();
 const routes_1 = __importDefault(require("./routes"));
 const cors = require("cors");
-app.use(cors({
-    origin: "http://localhost:5173",
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    credentials: true,
-    optionsSuccessStatus: 204,
-}));
+app.use(cors());
 app.use(routes_1.default);
 const bodyParser = require("body-parser");
 const PORT = process.env.PORT || 2000;
